@@ -11,7 +11,7 @@ def errc(code):		# Function to display errors
 	elif code==5:
 		print("You're supposed to enter an Even number")
 	elif code==6:
-		print("Err.. Number already exists")
+		print("Number already exists")
 	elif code==7:
 		print("Enter the num in range (1-9)")
 	elif code==8:
@@ -60,6 +60,8 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 	Sumx =0
 	Sumy =0
 	err = 0
+	
+	#Checking for sum in the column corresponding to pos 
 	for i in range(3):
 		Sumx += grid[x][i]
 		if grid[x][i] == 0:
@@ -67,7 +69,8 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 			Sumx = 0
 			err = 0
 			break
-
+	
+	# Checking for sum in the row corresponding to pos
 	for i in range(3):
 		Sumy += grid[i][y]
 		if grid[i][y] == 0:
@@ -75,12 +78,13 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 			Sumy = 0
 			err = 0
 			break
-	if Sumx == 15 or Sumy == 15:
-		return turn
+	
+	if Sumx == 15 or Sumy == 15:	# Return the player id if he won
+		return turn		
 	diagP = 0
 	diagS = 0
 	
-	if x == y:	# Primary Diagnol
+	if x == y:			# Primary Diagnol
 		for i in range(3):
 			diagP += grid[i][i]
 			if grid[i][i] ==  0:
@@ -89,9 +93,9 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 				err = 0
 				break
 
-	if diagP == 15:
+	if diagP == 15:			#Secondary Diagnol
 		return turn
-	if x+y ==2:
+	if x+y ==2:	
 		for i in range(3):
 			diagS+= grid[i][2-i]
 			if grid[i][2-i] == 0:
@@ -101,33 +105,33 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 	
 	if diagS == 15:
 		return turn
-	if count == 9:
+	if count == 9:			# If grid is full that means its a draw
 		return -1
 	return 0
+
 print("---\t Welcome to the Game! \t---")
+
 while opt == 'y':
 	turn = 1
 	grid = [[0 for i in range(3)] for j in range(3) ]
 	while 1:
 		print("\nPlayer",turn,"'s turn\n")
-		pos,num = input("Enter the position and number to be entered:").split()
+		pos,num = input("Enter the position and number to be entered(Sep. by space): ").split()
 		val = isvalid(grid,pos,num,turn)
 		if val != 1:
-			print("wrong input\n")
+			print("Error: ",end = " ")
 			errc(val)
 			continue
 		
 		res = gridPrint(grid,pos,num,turn)
-		if res == -1:
+		if res == -1:		# If it's a draw
 			print("It's a Draw\n")
 			break
-		elif res == turn:
+		elif res == turn:	# If someone won
 			print("Player ",turn," wins\n")
 			break
-		if turn == 1:
+		if turn == 1:		# Switching PLayer turns
 			turn = 2
 		else:
 			turn = 1
 	opt = input("Want to play again ? (y|n)")
-	
-
