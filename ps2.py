@@ -14,8 +14,12 @@ def errc(code):		# Function to display errors
 		print("Err.. Number already exists")
 	elif code==7:
 		print("Enter the num in range (1-9)")
+	elif code==8:
+		print("Enter integers only")
 
 def isvalid(grid,pos,num, turn):	# Function to check if the input entered by player is valid or not
+	if(pos.isdigit()==0 or num.isdigit()==0):
+		return 8
 	pos = int(pos)
 	num = int(num)
 	turn = int(turn)
@@ -49,8 +53,8 @@ def gridPrint(grid,pos,num,turn):		# Function to print and analyse the grid
 	for i in range(3):
 		for j in range(3):
 			print(grid[i][j],end =' | ')
-		if grid[i][j] != 0:
-			count += 1
+			if grid[i][j] != 0:
+				count += 1
 		print("\n____________")
 	# Checking part
 	Sumx =0
